@@ -76,3 +76,19 @@ app.get('/tags/:id', async (req, res)=> {
         console.error(err)
     }
 })
+
+//create new user
+app.post('/tags', async (req, res)=> {
+    const {tagDescription} = req.body;
+    try{
+        const connection = await pool.getConnection();
+        await connection.query("INSERT INTO TAGS (tagDescription) VALUES (?)", [tagDescription]);
+        const newTag = await connection.query("SELECT * FROM tags WHERE tagDescription = ?", [tagDescription])
+        connection.release();
+        res.status(201).json();
+    }
+    catch(err){
+        console.error('Error creating user:', err);
+        res.status(500).send('Error creating user');
+    }
+})
