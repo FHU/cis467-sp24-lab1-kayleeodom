@@ -36,6 +36,8 @@ app.get("/", async (req, res) => {
   }
 });
 
+//      TAGS
+// GET TAGS
 app.get("/tags", async (req, res) => {
   try {
     const conn = await pool.getConnection();
@@ -52,6 +54,7 @@ app.get("/tags", async (req, res) => {
   }
 });
 
+// GET TAGS ID
 app.get("/tags/:id", async (req, res) => {
   try {
     const conn = await pool.getConnection();
@@ -77,7 +80,7 @@ app.get("/tags/:id", async (req, res) => {
     }
 })
 
-//create new user
+//create new user (POST TAGS)
 app.post('/tags', async (req, res)=> {
     const {tagDescription} = req.body;
     try{
@@ -91,4 +94,56 @@ app.post('/tags', async (req, res)=> {
         console.error('Error creating user:', err);
         res.status(500).send('Error creating user');
     }
+})
+
+
+//    PRAYERS 
+
+// GET PRAYERS
+app.get("/prayers", async (req, res) => {
+    try {
+      const conn = await pool.getConnection();
+      console.log(req.user);
+      const [tags] = await conn.query("SELECT * FROM tags");
+  
+      conn.release();
+      //console.log(users)
+  
+      res.json(tags);
+    } catch (err) {
+      res.json({ message: "error" });
+      console.error(err);
+    }
+});
+
+// GET PRAYERS ID
+app.get("/prayers/:id", async (req, res) => {
+    try {
+      const conn = await pool.getConnection();
+      console.log(req.user);
+      const [tags] = await conn.query(
+        "SELECT * FROM tags WHERE tagID=" + req.params.id
+      );
+  
+      conn.release();
+      //console.log(users)
+  
+          if( tags.length > 0) {
+              res.json(tags[0])
+          }
+          else {
+              res.status(404).json({message: "Resource not found"})
+          }
+  
+      }
+      catch( err ) {
+          res.status(500).json( {message: "error"})
+          console.error(err)
+      }
+})
+
+  
+// POST PRAYERS
+app.post('/prayers', async (req,res)=> {
+
 })
