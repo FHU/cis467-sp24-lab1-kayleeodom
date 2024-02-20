@@ -260,7 +260,7 @@ app.get("/api/v1/prayers", async (req, res) => {
     }
 })
 
-// POST NEW PRAYER
+// POST NEW PRAYER - DONE
 app.post("/api/v1/prayers", async (req, res) => {
   try {
     const {
@@ -296,7 +296,7 @@ app.post("/api/v1/prayers", async (req, res) => {
   }
 });
 
-// PUT PRAYERS - COME BACK
+// PUT PRAYERS - DONE
 app.put('/api/v1/prayers/:id', async (req, res) => {
   const prayerID = req.params.id;
 
