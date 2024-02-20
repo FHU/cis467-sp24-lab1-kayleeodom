@@ -224,7 +224,7 @@ async function getPrayerDetails(prayerID) {
     GROUP BY prayers.prayerID`;
 
   const [result] = await pool.query(query, [prayerID]);
-  return result;
+  return result[0];
 }
 
 // GET PRAYERS - DONE
